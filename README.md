@@ -1051,6 +1051,167 @@ System.out.println("Even numbers: " + evenNumbers);
 System.out.println("Odd numbers: " + oddNumbers);
 ```
 
+##### **33. Find Product with Maximum Quantity Given a Map<String, Integer> where keys are product names and values are quantities, find the product with the maximum quantity.**
+```java
+import java.util.*;
+
+public class MaxProduct {
+    public static void main(String[] args) {
+        Map<String, Integer> products = Map.of(
+                "Laptop", 50,
+                "Phone", 120,
+                "Tablet", 80
+        );
+
+        Map.Entry<String, Integer> maxProduct =
+                products.entrySet()
+                        .stream()
+                        .max(Map.Entry.comparingByValue())
+                        .orElseThrow();
+
+        System.out.println("Max Product: " + maxProduct.getKey() +
+                           " -> " + maxProduct.getValue());
+    }
+}
+```
+
+
+##### **34. Filter Employees by Salary.  From a Map<String, Double> of employee → salary, filter employees earning more than 50,000.**
+```java
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class HighSalary {
+    public static void main(String[] args) {
+        Map<String, Double> employees = Map.of(
+                "Alice", 48000.0,
+                "Bob", 52000.0,
+                "Charlie", 70000.0
+        );
+
+        Map<String, Double> highEarners =
+                employees.entrySet()
+                        .stream()
+                        .filter(e -> e.getValue() > 50000)
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue
+                        ));
+
+        System.out.println(highEarners);
+    }
+}
+```
+
+
+
+##### **35. Top 3 Most Populated Cities.  Given a Map<String, Integer> of city → population, find the top 3 most populated cities.**
+```java
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class TopCities {
+    public static void main(String[] args) {
+        Map<String, Integer> cityPopulation = Map.of(
+                "Delhi", 30000000,
+                "Mumbai", 20000000,
+                "Bangalore", 15000000,
+                "Chennai", 12000000,
+                "Kolkata", 14000000
+        );
+
+        List<Map.Entry<String, Integer>> top3 =
+                cityPopulation.entrySet()
+                        .stream()
+                        .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                        .limit(3)
+                        .collect(Collectors.toList());
+
+        System.out.println("Top 3 Cities: " + top3);
+    }
+}
+```
+
+
+##### **36. Convert Prices from USD to INR.  Given a Map<String, Integer> of item → price in USD, convert all prices to INR (1 USD = 85 INR).**
+```java
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class PriceConvert {
+    public static void main(String[] args) {
+        Map<String, Integer> pricesUSD = Map.of(
+                "Book", 10,
+                "Pen", 2,
+                "Laptop", 800
+        );
+
+        Map<String, Integer> pricesINR =
+                pricesUSD.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                e -> e.getValue() * 85
+                        ));
+
+        System.out.println(pricesINR);
+    }
+}
+
+```
+
+
+##### **37. Sort Map by Values. Sort a Map<String, Integer> (student → marks) in descending order of marks.**
+```java
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class SortMap {
+    public static void main(String[] args) {
+        Map<String, Integer> marks = Map.of(
+                "Ravi", 88,
+                "Priya", 95,
+                "Anil", 72
+        );
+
+        LinkedHashMap<String, Integer> sorted =
+                marks.entrySet()
+                        .stream()
+                        .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new
+                        ));
+
+        System.out.println(sorted);
+    }
+}
+```
+
+##### **38. Total Units Sold. Given a Map<String, Integer> of product → units sold, find the total units sold.**
+
+```java
+import java.util.*;
+
+public class TotalUnits {
+    public static void main(String[] args) {
+        Map<String, Integer> sales = Map.of(
+                "Shoes", 30,
+                "Bags", 20,
+                "Shirts", 50
+        );
+
+        int total = sales.values()
+                         .stream()
+                         .mapToInt(Integer::intValue)
+                         .sum();
+
+        System.out.println("Total Units Sold = " + total);
+    }
+}
+```
 
 
 
